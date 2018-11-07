@@ -104,6 +104,10 @@
                
                - Go to your newly created project: cd ./MyTestIonicApp
                - Get Ionic DevApp for easy device testing: https://bit.ly/ionic-dev-app
+
+* Run
+
+        cd MyTestIonicApp
         
 | Navigation |
 | ---------- |
