@@ -25,6 +25,7 @@
     "@ionic-native/status-bar": "~4.15.0",
     "@ionic/storage": "2.2.0",
     "com.acuant.plugin.acuantmobilesdk": "file:../../AcuantHybridMobileSDK/cordova-plugin-AcuantHybridSDK",
+    "cordova-android": "7.0.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-intent": "^0.1.2",
