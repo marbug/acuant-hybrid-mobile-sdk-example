@@ -1,17 +1,27 @@
 #!/bin/sh
 
 currentBranch=`git branch | grep '^*' | awk '{print $2}'`
-echo "Current branch: ${currentBranch}"
+echo "============ Current branch"
+echo "${currentBranch}"
 
+echo "============ Checkout master"
 git checkout master
+git pull
 
-for branchName in `git branch | grep -v '^*'`
+echo "============ Getting programs list"
+for programName in `git branch | grep -v '^*' | awk '{print substr($0, 0, index($0, "_") - 1)}' | sort -u`
 do
-    echo "==== ${branchName}"
-    git checkout ${branchName}
-    git rebase master
-    ./scripts/save-repo.sh
+    echo "======== ${programName}"
+    prevBranch="master"
+    for branchName in `git branch | awk '{print $1;}' | grep "^${programName}"`
+    do
+        echo "==== ${branchName}"
+        echo "${prevBranch}"
+        git rebase "${prevBranch}"
+        ./scripts/save-repo.sh
+        prevBranch="${branchName}"
+    done
 done
 
-echo "==== Return to initial branch: ${currentBranch}"
+echo "============ Return to initial branch: ${currentBranch}"
 git checkout ${currentBranch}
