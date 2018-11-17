@@ -1,0 +1,59 @@
+repositories{
+  jcenter()
+  maven { url 'http://maven.microblink.com' }
+  flatDir{
+    dirs "libs"
+   }
+}
+
+dependencies {
+	implementation 'com.android.support:multidex:1.0.1'
+    implementation (name:'acuantMobileSDK', ext:'aar')
+    implementation('com.microblink:pdf417.mobi:6.4.0@aar') {
+        transitive = true
+    }
+    implementation 'com.android.support:appcompat-v7:27+'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation ('org.jmrtd:jmrtd:0.5.13'){
+        transitive = true;
+    }
+
+    implementation ('org.ejbca.cvc:cert-cvc:1.4.3'){
+        transitive = true;
+    }
+    implementation ('com.madgag.spongycastle:prov:1.54.0.0'){
+        transitive = true;
+    }
+    implementation ('net.sf.scuba:scuba-sc-android:0.0.9'){
+        transitive = true;
+    }
+}
+
+android {
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    defaultConfig {
+        multiDexEnabled true
+	}
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '27+'
+            }
+        }
+    }
+}
